@@ -15,14 +15,14 @@ private char choice;
 
 
 	//main function to begin introduction
-	void main()
+	public static void main(String[] arg) 
 	{
-
-	    description(0); // function call to begin the rest of program
+		hangman h = new hangman();
+	    h.description(0); // function call to begin the rest of program
 
 	}
 
-	void description(int result)  //description leading into 3 choices
+	public void description(int result)  //description leading into 3 choices
 	{
 	    //char choice;
         //Scanner scanner = new Scanner(System.in);
@@ -54,6 +54,7 @@ private char choice;
 	    if(choice =='Q'|| choice == 'q')  //quit out the terminal
 	    {
 	        //system("cls");
+	    	clearScreen();
 	        System.out.println("\nPlease come again!!\n\n\n");
 	        //exit(-1);
 	    }
@@ -72,7 +73,7 @@ private char choice;
 	    {
 
 	        System.out.println("\n<ERROR: Please enter a valid response>\n\n\n");
-	        main();
+	       // main();
 	    }
 
 
@@ -263,7 +264,7 @@ private char choice;
 	    System.out.println("Press any key to continue");
 	    getch();
 	    clearScreen();
-	    main();
+	    //main();
 	}
 
 	//receive randomized word

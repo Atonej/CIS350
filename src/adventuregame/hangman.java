@@ -45,25 +45,25 @@ private char choice;
 	    System.out.println("\nChoice:\t");
 	    //choice = scanner.nextLine();
 	    getch();
-
+	    //clearScreen();
 	    //choice=get(); //read choice from screen
 	    //system("cls");//clear screen
 	    
 
 
-	    if(choice =='Q'|| choice == 'q')  //quit out the terminal
+	    if(choice =='Q'|| choice == 'q')  //quit out the console
 	    {
 	        //system("cls");
-	    	clearScreen();
+	    	//clearScreen();
 	        System.out.println("\nPlease come again!!\n\n\n");
 	        //exit(-1);
 	    }
-	    if(choice=='H'|| choice== 'h') //help directions
+	    else if(choice=='H'|| choice== 'h') //help directions
 	    {
 	        help_menu_main();
 
 	    }
-	    if(choice == 'P' || choice == 'p')  //play game
+	    else if(choice == 'P' || choice == 'p')  //play game
 	    {
 	    	
 	        hangmanGame();
@@ -109,7 +109,8 @@ private char choice;
 	    
 	    num = separate.length();
 	    //separate= randWord;
-	    char progress[] = new char[10]; //character arrays, progress of game and wrong characters
+	    char progress[] = new char[10]; //character arrays, progress 
+	    								//of game and wrong characters
 	    char showWrong[]= new char [10];
 	    char replace[] = new char [10];
 
@@ -197,8 +198,8 @@ private char choice;
 	                    		+ "to return to main screen");
 	                    getch();
 	                    //revealWord(0);
-	                    clearScreen();;
-	                    //description(2);
+	                    //clearScreen();
+	                    description(2);
 
 	                    return isWon;
 	                }
@@ -239,7 +240,7 @@ private char choice;
 	                		+ "");
 	                getch();
 	                isLost=1;
-	                clearScreen();
+	                //clearScreen();
 	                description(1);
 
 
@@ -257,18 +258,18 @@ private char choice;
 	}
 
 
-	void help_menu_main()
+	public void help_menu_main()
 	{
 	    System.out.println("If you would like to play the game hit the P character, if you do not want to play hit the Q key.\n");
 	    System.out.println("This program is not key sensitive, but choose one of the 3 options shown on the main menu.\n\n");
 	    System.out.println("Press any key to continue");
 	    getch();
-	    clearScreen();
-	    //main();
+	    //clearScreen();
+	    description(0);
 	}
 
 	//receive randomized word
-	String getword()
+	public String getword()
 	{
 	    String[] arr2 = new String[] { "crocodile", "crocodile", "crocodile", 
 	    		"crocodile", "horse", "camel", "monkey", "dolphin", 
@@ -284,7 +285,7 @@ private char choice;
 	    return randomName;
 	}
 
-	void lastgame(int result) //return the results of last game
+	public void lastgame(int result) //return the results of last game
 	{
 	    if(result==1)
 	    {
@@ -302,7 +303,7 @@ private char choice;
 	    }
 	}
 
-	void wrong(int attempt) //Used when guess is wrong to build the hangman
+	public void wrong(int attempt) //Used when guess is wrong to build the hangman
 	{
 	    if(attempt>0)
 	    {

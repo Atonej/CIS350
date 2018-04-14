@@ -6,80 +6,16 @@ import java.io.IOException;
 * This program will run a screen of hangman where the user guesses 
 * a word
 * @author Atone Joryman
-* @version 2/25/2018
+* @version Winter 2018
 *******************************************************************/
-public class hangman {
+public class Hangman {
 
-private char choice;	
+protected char choice;	
 	
-
-
-	//main function to begin introduction
-	public static void main(String[] arg) 
-	{
-		hangman h = new hangman();
-	    h.description(0); // function call to begin the rest of program
-
-	}
-
-	public void description(int result)  //description leading into 3 choices
-	{
-	    //char choice;
-        //Scanner scanner = new Scanner(System.in);
-
-	    System.out.println("Welcome to the game of Hangman!");//welcome
-	    System.out.println("\n_______________________________\n");
-	    System.out.println("\nWritten By:\n\n");
-	    System.out.println("Atone Joryman\n");
-	    System.out.println("***********************");
-
-	    System.out.println("\nYour Last Game Played:\n\n");
-	    lastgame(result); //show the last game
-
-	    System.out.println("------------------------\n\n");
-
-	    System.out.println("Main Menu Options");
-	    System.out.println("\n\n------------------------\n");
-	    System.out.println("\nP:Play\n\nH:Help\n\nQ:Quit\n");
-	    System.out.println("\n\n------------------------\n");
-	    System.out.println("\nChoice:\t");
-	    //choice = scanner.nextLine();
-	    getch();
-	    //clearScreen();
-	    //choice=get(); //read choice from screen
-	    //system("cls");//clear screen
-	    
-
-
-	    if(choice =='Q'|| choice == 'q')  //quit out the console
-	    {
-	        //system("cls");
-	    	//clearScreen();
-	        System.out.println("\nPlease come again!!\n\n\n");
-	        //exit(-1);
-	    }
-	    else if(choice=='H'|| choice== 'h') //help directions
-	    {
-	        help_menu_main();
-
-	    }
-	    else if(choice == 'P' || choice == 'p')  //play game
-	    {
-	    	
-	        hangmanGame();
-
-	    }
-	    else   //invalid character used
-	    {
-
-	        System.out.println("\n<ERROR: Please enter a valid response>\n\n\n");
-	       // main();
-	    }
-
-
-
-
-	}
+	
+	/*****************************************************************
+	 * constructor method to build the game
+	 *****************************************************************/
 	 public int hangmanGame()  // game of hangman, enter letter and receive word
 	{
 	    char word[]; //point to the random word
@@ -90,12 +26,12 @@ private char choice;
 	    int j;
 	    int attempt;
 
-	    System.out.println("Welcome to the famous game of Hangman!\n");
-	    System.out.println("I invite you to try and guess the word I am thinking.......\n");
-	    System.out.println("You have 10 tries to be incorrect otherwise you continue into the next round and I show you the word!\n");
-	    System.out.println("HINT: I happen to show a likeness to the biological life that's not humans\n");
-	    System.out.println("However for each moment you are incorrect I draw a line that leads closer to a stick figure man");
-	    System.out.println("\nGuess correctly you win! Guess incorrectly ten times, you get hangman!(YOU LOSE)\n\n");
+//	    System.out.println("Welcome to the famous game of Hangman!\n");
+//	    System.out.println("I invite you to try and guess the word I am thinking.......\n");
+//	    System.out.println("You have 10 tries to be incorrect otherwise you continue into the next round and I show you the word!\n");
+//	    System.out.println("HINT: I happen to show a likeness to the biological life that's not humans\n");
+//	    System.out.println("However for each moment you are incorrect I draw a line that leads closer to a stick figure man");
+//	    System.out.println("\nGuess correctly you win! Guess incorrectly ten times, you get hangman!(YOU LOSE)\n\n");
 
 
 	    String randWord = getword();//point the variable to the randomized word
@@ -143,7 +79,6 @@ private char choice;
 	        System.out.println("\nEnter a letter: ");
 	        
 	        //user[0] = getch(); //get letter
-	        getch();
 
 
 	        for(i=0; i<num; i++) //Checking if any of the letters in the word match
@@ -189,17 +124,17 @@ private char choice;
 	//if(yes) {printf("%c", replace[i]); //if no duplicates
 	//}
 //	            }
-
+	                  
+	                  //when word is correct
 	                if(randWord.equals(progress[i]))
 	                {
 	                    isWon=2;
 	                    System.out.println("\n\n\nYou have won the game!"
 	                    		+ "\nYour word was "+randWord+"\n\nPress any key "
 	                    		+ "to return to main screen");
-	                    getch();
 	                    //revealWord(0);
 	                    //clearScreen();
-	                    description(2);
+	                   // description(2);
 
 	                    return isWon;
 	                }
@@ -210,6 +145,7 @@ private char choice;
 	            }
 	        }
 
+	        //determind false guess
 	        if(correctGuess !=1)
 	        {
 
@@ -238,10 +174,9 @@ private char choice;
 	                System.out.println("\nYou got hangman!\n\n "
 	                		+ "Press any key to return to main screen\n"
 	                		+ "");
-	                getch();
 	                isLost=1;
 	                //clearScreen();
-	                description(1);
+	                //description(1);
 
 
 	                return isLost;
@@ -258,17 +193,11 @@ private char choice;
 	}
 
 
-	public void help_menu_main()
-	{
-	    System.out.println("If you would like to play the game hit the P character, if you do not want to play hit the Q key.\n");
-	    System.out.println("This program is not key sensitive, but choose one of the 3 options shown on the main menu.\n\n");
-	    System.out.println("Press any key to continue");
-	    getch();
-	    //clearScreen();
-	    description(0);
-	}
 
-	//receive randomized word
+	/*******************************************************************
+	 * getter method receive randomized word
+	 * @return the chosen word
+	 ******************************************************************/
 	public String getword()
 	{
 	    String[] arr2 = new String[] { "crocodile", "crocodile", "crocodile", 
@@ -285,24 +214,13 @@ private char choice;
 	    return randomName;
 	}
 
-	public void lastgame(int result) //return the results of last game
-	{
-	    if(result==1)
-	    {
-	        System.out.println("You lost the game.\n");
 
-	    }
-	    if(result==2)
-	    {
-	        System.out.println("You won the game.\n");
 
-	    }
-	    if(result!=1 && result!=2)
-	    {
-	        System.out.println("No game was played\n");
-	    }
-	}
-
+	/*******************************************************************
+	 * display the hangman of the game, incremental
+	 * 
+	 * @param attempt
+	 ******************************************************************/
 	public void wrong(int attempt) //Used when guess is wrong to build the hangman
 	{
 	    if(attempt>0)
@@ -509,21 +427,6 @@ private char choice;
 	        }
 	    }
 
-	}
-	
-	
-	public static void clearScreen() {  
-	    System.out.print("\033[H\033[2J");  
-	    System.out.flush();  
-	}  
-	
-	private void getch() {
-		try {
-			choice = (char) System.in.read();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 }

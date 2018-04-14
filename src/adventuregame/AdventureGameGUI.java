@@ -1,12 +1,12 @@
 package adventuregame;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -18,42 +18,79 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
-
-public class adventureGameGUI extends JFrame implements ActionListener{
+/**
+ * This GUI class is the source for the runnable game that accesses
+ * a room and a 4 mini games. 
+ * 
+ * @author Atone Joryman
+ * @version Winter 2018
+ *
+ */
+public class AdventureGameGUI extends JFrame implements ActionListener, KeyListener{
 	
 	
-	/**
-	 * 
-	 */
+	/**	Used for files **/
 	private static final long serialVersionUID = 1L;
+	
+	/** menu bar **/
 	private JMenuBar menu;
+	
+	/** Drop down file option on menu bar **/
 	private JMenu file;
+	
+	/** file option **/
 	private JMenuItem quit;
 	
+	/** right directional button on panel **/
 	private JButton right;
+	
+	/** left directional button on panel **/
+
 	private JButton left;
+	
+	/** BACKWARD directional button on panel **/
+
 	private JButton down;
+	
+	/** FORWARD directional button on panel **/
 	private JButton up;
+	
+	/** panel interface **/ 
 	private JPanel panel;
+	
+	/** panel for buttons **/
+	private JPanel buttonPanel;
+
 	
 	/**image instead of a button*/
 	private ImageIcon image;
-	Image img;
-	Image img2;
+	
+	public Image img;
+	public Image img2;
+	
+	/** screen for first mini-game **/
 	private JButton imageButton1;
 	//private Image im;
+	/** screen for first mini-game **/
 	private JButton imageButton2;
-	private JPanel buttonPanel;
+	
+	/** screen for first mini-game **/
 	private JButton imageButton4;
+	
+	/** screen for first mini-game **/
 	private JButton imageButton3;
 	
-	
-	public adventureGameGUI() {//throws IOException{
+	/**
+	 * This constructor sets up the GUI for the escape room
+	 * 
+	 */
+	public AdventureGameGUI() {//throws IOException{
 		
-		
+	// new panels 	
 	panel = new JPanel();
 	buttonPanel = new JPanel();
 	 // Image img = Toolkit.getDefaultToolkit().createImage("IMG_0061.jpg");
@@ -62,7 +99,7 @@ public class adventureGameGUI extends JFrame implements ActionListener{
 		
 //		BufferedImage img2 = ImageIO.read(new File("IMG_0061.jpg"));
 		
-		
+		//assignments to buttons
 		right = new JButton("right");
 		left = new JButton("left");
 		down = new JButton("down");
@@ -74,24 +111,30 @@ public class adventureGameGUI extends JFrame implements ActionListener{
 		
 		
 		
-		
+		//make sure there are action listeners for buttons
 		right.addActionListener(this);
 		left.addActionListener(this);
 		down.addActionListener(this);
 		up.addActionListener(this);
 		
+		//listen to keyboard actions
+		addKeyListener(this);
 		
 		
+		//set up menu
 		file.add(quit);
 		menu.add(file);
 		
+		//panel board
 		panel.add(right);
 		panel.add(left);
 		panel.add(down);
 		panel.add(up);
 		
+		//set specified layout 
 		this.setLayout(new BorderLayout());
 		
+		//add new panels to JFrame
 		this.add(menu, BorderLayout.NORTH);
 		this.add(panel, BorderLayout.SOUTH);
 		this.add(buttonPanel, BorderLayout.CENTER);
@@ -109,7 +152,7 @@ public class adventureGameGUI extends JFrame implements ActionListener{
 	public static void main (String[] args) {
 		//new mainPanel();
 		
-		final JFrame frame = new adventureGameGUI();
+		final JFrame frame = new AdventureGameGUI();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(true);
 	}
@@ -118,7 +161,8 @@ public class adventureGameGUI extends JFrame implements ActionListener{
 	
 	
 	
-	
+	// TODO: use a separate graphics class to change the default 
+	// GUI look
 	public void paintComponent(Graphics g) {
 		
 		
@@ -131,7 +175,11 @@ public class adventureGameGUI extends JFrame implements ActionListener{
 		
 	}
 
-
+/*
+ * (non-Javadoc)
+ * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+ */
+	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource() == right) {
@@ -155,10 +203,11 @@ catch(IOException ioe)
     ioe.printStackTrace();
 }
 
+//put decided image to go to button
 imageButton1 = new JButton(image);
 imageButton1.addActionListener(this);
 //imageButton1.setPreferredSize(new Dimension(400, 400));
-
+			//remove all previous objects on panel
 	       	buttonPanel.removeAll();
 			buttonPanel.add(imageButton1);
 			
@@ -168,7 +217,8 @@ imageButton1.addActionListener(this);
 		}
 		
 		if(e.getSource() == imageButton1) {
-			//TODO: include the tictactoe game 
+			//TODO: include the car game
+
 			
 		}
 		
@@ -207,10 +257,13 @@ imageButton1.addActionListener(this);
 						
 		}
 		
+		//include hangman game 
 		if(e.getSource() == imageButton2) {
 			new DialogHangman(); 
 			
 		}
+		
+		
 		if(e.getSource() == down) {
 			File url = new File("src/IMG_0061.jpg");
 			
@@ -241,10 +294,15 @@ imageButton1.addActionListener(this);
 			
 		}
 		
+		//dueling game
 		if(e.getSource() == imageButton3) {
 			//TODO: include the third game 
+			Dueling d = new Dueling();
+			d.buildGUI();
 			
 		}
+		
+		
 		if(e.getSource() == up) {
 			File url = new File("src/IMG_0063.jpg");
 			
@@ -274,7 +332,7 @@ imageButton1.addActionListener(this);
 		}
 		
 		if(e.getSource() == imageButton4) {
-			//TODO: include the fourth game 
+			//TODO: include the master mind game 
 			
 		}
 
@@ -283,8 +341,63 @@ imageButton1.addActionListener(this);
 	}
 	
 	
+	/***********************************************************************
+	* method to react to key being typed
+	***********************************************************************/
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			JOptionPane.showMessageDialog(null, "Returning to main "
+					+ "screen");
+			  // description(0);
+		}
+		
+		else {
+			JOptionPane.showMessageDialog(null, "Please hit enter");
+		}
+	}
+	
+	/***********************************************************************
+	* method to react to key being pressed
+	***********************************************************************/
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			JOptionPane.showMessageDialog(null, "Returning to main "
+					+ "screen");
+			  // description(0);
+		}
+		
+		else {
+			JOptionPane.showMessageDialog(null, "Please hit enter");
+		}
+	}
+
+	/***********************************************************************
+	* method to react to key being released
+	***********************************************************************/
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e.getKeyCode());
+		System.out.println(KeyEvent.VK_ENTER);
+
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			JOptionPane.showMessageDialog(this, "Returning to main "
+					+ "screen");
+			  // description(0);
+		}
+		
+		else {
+			JOptionPane.showMessageDialog(this, "Please hit enter");
+		}
+	}
+
 	
 	
+
 	
 	
 	

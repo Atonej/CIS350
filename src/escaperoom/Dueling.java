@@ -96,7 +96,7 @@ public class Dueling implements ActionListener {
 		rules = new JTextArea("rules");
 		
 		frame = new JFrame("Dueling Game");
-		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		

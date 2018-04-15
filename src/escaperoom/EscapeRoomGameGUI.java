@@ -20,17 +20,21 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 
-/**
+
+
+/***********************************************************************
  * This GUI class is the source for the runnable game that accesses
  * a room and a 4 mini games. 
  * 
  * @author Atone Joryman
  * @version Winter 2018
  *
- */
-public class EscapeRoomGameGUI extends JFrame implements ActionListener, KeyListener{
+ **********************************************************************/
+public class EscapeRoomGameGUI extends JFrame implements ActionListener,
+KeyListener{
 	
 	
 	/**	Used for files **/
@@ -67,7 +71,7 @@ public class EscapeRoomGameGUI extends JFrame implements ActionListener, KeyList
 
 	
 	/**image instead of a button*/
-	private ImageIcon image;
+	private RoomImages image;
 	
 	public Image img;
 	public Image img2;
@@ -84,10 +88,10 @@ public class EscapeRoomGameGUI extends JFrame implements ActionListener, KeyList
 	/** screen for first mini-game **/
 	private JButton imageButton3;
 	
-	/**
+	/*******************************************************************
 	 * This constructor sets up the GUI for the escape room
 	 * 
-	 */
+	 ******************************************************************/
 	public EscapeRoomGameGUI() {//throws IOException{
 		
 	// new panels 	
@@ -109,13 +113,25 @@ public class EscapeRoomGameGUI extends JFrame implements ActionListener, KeyList
 		
 		menu = new JMenuBar();
 		
+		image = new RoomImages();
 		
+		//empty buttons
+//		imageButton1 = new JButton();
+//		imageButton2 = new JButton();
+//		imageButton3 = new JButton();
+//		imageButton4 = new JButton();
 		
 		//make sure there are action listeners for buttons
 		right.addActionListener(this);
 		left.addActionListener(this);
 		down.addActionListener(this);
 		up.addActionListener(this);
+		
+//		imageButton1.addActionListener(this);
+//		imageButton2.addActionListener(this);
+//		imageButton3.addActionListener(this);
+//		imageButton4.addActionListener(this);
+
 		
 		//listen to keyboard actions
 		addKeyListener(this);
@@ -140,6 +156,8 @@ public class EscapeRoomGameGUI extends JFrame implements ActionListener, KeyList
 		this.add(buttonPanel, BorderLayout.CENTER);
 		//add(file);
 		
+		//allows use of keystrokes
+		setFocusable(true);
 		setVisible(true);
 		setSize(800,700);
 		
@@ -155,6 +173,15 @@ public class EscapeRoomGameGUI extends JFrame implements ActionListener, KeyList
 		final JFrame frame = new EscapeRoomGameGUI();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(true);
+		
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() { //make visible
+				frame.setVisible(true);
+			}
+		});
+	
 	}
 
 	
@@ -183,29 +210,13 @@ public class EscapeRoomGameGUI extends JFrame implements ActionListener, KeyList
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource() == right) {
-			//try
-	       // {	//use an url for the undo button
-
+			//use an url for the undo button
 			
-			File url = new File("src/image1-1.jpeg");
-			
-try
-{	//use an url for the undo button
-    image = new ImageIcon(ImageIO.read(
-            url));
-}
-catch(MalformedURLException mue)
-{	//error of form to frame
-    mue.printStackTrace();
-}
-catch(IOException ioe)
-{	//can't print
-    ioe.printStackTrace();
-}
 
 //put decided image to go to button
-imageButton1 = new JButton(image);
+imageButton1 = new JButton(image.getGame1());
 imageButton1.addActionListener(this);
+
 //imageButton1.setPreferredSize(new Dimension(400, 400));
 			//remove all previous objects on panel
 	       	buttonPanel.removeAll();
@@ -224,24 +235,12 @@ imageButton1.addActionListener(this);
 		
 		
 		if(e.getSource() == left) {
-			File url = new File("src/image1.jpeg")	;
 			
-			try
-			{	//use an url for the undo button
-			    image = new ImageIcon(ImageIO.read(
-			            url));
-			}
-			catch(MalformedURLException mue)
-			{	//error of form to frame
-			    mue.printStackTrace();
-			}
-			catch(IOException ioe)
-			{	//can't print
-			    ioe.printStackTrace();
-			}
 
-			imageButton2 = new JButton(image);
+			imageButton2 = new JButton(image.getGame2());
 			imageButton2.addActionListener(this);
+			
+
 			//imageButton1.setPreferredSize(new Dimension(400, 400));
 
 			//remove the button then replace it
@@ -265,33 +264,17 @@ imageButton1.addActionListener(this);
 		
 		
 		if(e.getSource() == down) {
-			File url = new File("src/IMG_0061.jpg");
 			
-			try
-			{	//use an url for the undo button
-			    image = new ImageIcon(ImageIO.read(
-			            url));
-			}
-			catch(MalformedURLException mue)
-			{	//error of form to frame
-			    mue.printStackTrace();
-			}
-			catch(IOException ioe)
-			{	//can't print
-			    ioe.printStackTrace();
-			}
-
-			imageButton3 = new JButton(image);
+			imageButton3 = new JButton(image.getGame3());
 			imageButton3.addActionListener(this);
-			//imageButton1.setPreferredSize(new Dimension(400, 400));
 
+			//imageButton1.setPreferredSize(new Dimension(400, 400));
 				       
 			buttonPanel.removeAll();
 			buttonPanel.add(imageButton3);
 						
 						revalidate();
-						repaint();
-			
+						repaint();		
 		}
 		
 		//dueling game
@@ -304,24 +287,10 @@ imageButton1.addActionListener(this);
 		
 		
 		if(e.getSource() == up) {
-			File url = new File("src/IMG_0063.jpg");
 			
-			try
-			{	//use an url for the undo button
-			    image = new ImageIcon(ImageIO.read(
-			            url));
-			}
-			catch(MalformedURLException mue)
-			{	//error of form to frame
-			    mue.printStackTrace();
-			}
-			catch(IOException ioe)
-			{	//can't print
-			    ioe.printStackTrace();
-			}
-
-			imageButton4 = new JButton(image);
+			imageButton4 = new JButton(image.getGame4());
 			imageButton4.addActionListener(this);
+
 			//imageButton1.setPreferredSize(new Dimension(400, 400));
 				       
 			buttonPanel.removeAll();
@@ -341,38 +310,20 @@ imageButton1.addActionListener(this);
 	}
 	
 	
-	/***********************************************************************
-	* method to react to key being typed
-	***********************************************************************/
+	/*******************************************************************
+	* method to react to key being typed must implement/no code needed
+	*******************************************************************/
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-			JOptionPane.showMessageDialog(null, "Returning to main "
-					+ "screen");
-			  // description(0);
-		}
 		
-		else {
-			JOptionPane.showMessageDialog(null, "Please hit enter");
-		}
 	}
 	
 	/***********************************************************************
-	* method to react to key being pressed
+	* method to react to key being pressed must implement/no code needed
 	***********************************************************************/
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-			JOptionPane.showMessageDialog(null, "Returning to main "
-					+ "screen");
-			  // description(0);
-		}
-		
-		else {
-			JOptionPane.showMessageDialog(null, "Please hit enter");
-		}
+	
 	}
 
 	/***********************************************************************
@@ -380,18 +331,56 @@ imageButton1.addActionListener(this);
 	***********************************************************************/
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e.getKeyCode());
-		System.out.println(KeyEvent.VK_ENTER);
-
-		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-			JOptionPane.showMessageDialog(this, "Returning to main "
-					+ "screen");
-			  // description(0);
-		}
 		
-		else {
-			JOptionPane.showMessageDialog(this, "Please hit enter");
+		//hint to self check to see if key is still listening
+		
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			imageButton1 = new JButton(image.getGame1());
+			imageButton1.addActionListener(this);
+			imageButton1.setFocusable(false);
+
+		       
+			buttonPanel.removeAll();
+			buttonPanel.add(imageButton1);
+						
+						revalidate();
+						repaint();			
+		}  if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			imageButton2 = new JButton(image.getGame2());
+			imageButton2.addActionListener(this);
+			imageButton2.setFocusable(false);
+
+   
+			buttonPanel.removeAll();
+			buttonPanel.add(imageButton2);
+						
+						revalidate();
+						repaint();
+			
+		}  if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			imageButton3 = new JButton(image.getGame3());
+			imageButton3.addActionListener(this);
+			imageButton3.setFocusable(false);
+
+   
+			buttonPanel.removeAll();
+			buttonPanel.add(imageButton3);
+						
+						revalidate();
+						repaint();
+			
+		}  if (e.getKeyCode() == KeyEvent.VK_UP) {
+			imageButton4 = new JButton(image.getGame4());
+			imageButton4.addActionListener(this);
+			imageButton4.setFocusable(false);
+
+			
+			buttonPanel.removeAll();
+			buttonPanel.add(imageButton4);
+						
+						revalidate();
+						repaint();
+			
 		}
 	}
 

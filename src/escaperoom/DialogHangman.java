@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  * @author Atone Joryman
  * @version Winter 2018
  */
-public class DialogHangman extends JDialog implements ActionListener {
+public class DialogHangman extends JDialog implements ActionListener, KeyListener {
 
 	/**	for using files **/
 	private static final long serialVersionUID = 1L;
@@ -55,9 +55,9 @@ public class DialogHangman extends JDialog implements ActionListener {
 	/** check for entry **/
 	private boolean enter;
 
-	/***
+	/******************************************************************
 	 * Constructor for the dialog game that sets up the interface
-	 */
+	 ******************************************************************/
 	DialogHangman(){
 		
 		//declaring
@@ -70,9 +70,15 @@ public class DialogHangman extends JDialog implements ActionListener {
 		help = new JButton("Help");
 		quit = new JButton("Quit");
 		
+		description = new JEditorPane();
+		input = new JLabel("Enter Here");
+		entry = new JTextField("Enter");
+		
 		play.addActionListener(this);
 		help.addActionListener(this);
 		quit.addActionListener(this);
+		
+		addKeyListener(this);
 		
 		
 		//add to dialog part of the frame
@@ -92,6 +98,10 @@ public class DialogHangman extends JDialog implements ActionListener {
 		setSize(500,500);
 		setVisible(true);
 		setResizable(true);
+		setFocusable(true);
+	    help.setFocusable(false);
+	    play.setFocusable(false);
+
 		
 //		 AudioInputStream audioInputStream =
 //	                AudioSystem.getAudioInputStream(soundFile.wav file);
@@ -111,9 +121,7 @@ public class DialogHangman extends JDialog implements ActionListener {
 	{
 	    //char choice;
         //Scanner scanner = new Scanner(System.in);
-		description = new JEditorPane();
-		input = new JLabel("Enter Here");
-		entry = new JTextField("Enter");
+		
 		
 		String last = lastgame(result); //show the last game
 		
@@ -148,6 +156,7 @@ public class DialogHangman extends JDialog implements ActionListener {
 	        		+ " a valid response>\n\n\n");
 	       // main();
 	    }
+	    //not text that should be edited
 	    description.setEditable(false);
 	    description.setPreferredSize(new Dimension(300, 500));
 	    info.add(description);
@@ -242,6 +251,35 @@ public class DialogHangman extends JDialog implements ActionListener {
 		JDialog d = new DialogHangman();
 		d.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		d.setResizable(true);
+	}
+
+	/*******************************************************************
+	* method to react to key being typed must implement/no code needed
+	*******************************************************************/
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/*******************************************************************
+	* method to react to key being typed must implement/no code needed
+	*******************************************************************/
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+			//if key button is pressed
+			if(help.isEnabled()) {
+				description(0);
+			}
+	}
+
+	/*******************************************************************
+	* method to react to key being typed must implement/no code needed
+	*******************************************************************/
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

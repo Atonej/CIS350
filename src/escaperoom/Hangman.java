@@ -26,22 +26,11 @@ protected char choice;
 	    int j;
 	    int attempt;
 
-//	    System.out.println("Welcome to the famous game of Hangman!\n");
-//	    System.out.println("I invite you to try and guess the word I am thinking.......\n");
-//	    System.out.println("You have 10 tries to be incorrect otherwise you continue into the next round and I show you the word!\n");
-//	    System.out.println("HINT: I happen to show a likeness to the biological life that's not humans\n");
-//	    System.out.println("However for each moment you are incorrect I draw a line that leads closer to a stick figure man");
-//	    System.out.println("\nGuess correctly you win! Guess incorrectly ten times, you get hangman!(YOU LOSE)\n\n");
-
-
 	    String randWord = getword();//point the variable to the randomized word
 	    String separate = randWord;
 
-//	    while(*separate != '\0') // count number of letters in word
-//	    {
-//	        separate++;
-//	        num++;
-//	    }
+        //TODO count number of letters in word
+
 	    
 	    num = separate.length();
 	    //separate= randWord;

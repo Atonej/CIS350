@@ -188,19 +188,7 @@ KeyListener{
 	
 	
 	
-	// TODO: use a separate graphics class to change the default 
-	// GUI look
-	public void paintComponent(Graphics g) {
-		
-		
-		g.drawImage(img, 0, 0, null);
-		g.drawImage(img2, 0, 0, null);
-		
-		
-		
-		
-		
-	}
+
 
 /*
  * (non-Javadoc)

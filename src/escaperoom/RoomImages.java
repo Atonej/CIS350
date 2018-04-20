@@ -1,6 +1,5 @@
 package escaperoom;
-
-import java.awt.Image;
+//import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -30,10 +29,10 @@ public class RoomImages {
 	private ArrayList<Integer> right;
 	private ArrayList<Integer> forward;
 	private ArrayList<Integer> backward;
-	private int lavail;
-	private int ravail;
-	private int favail;
-	private int bavail;
+//	private int lavail;
+//	private int ravail;
+//	private int favail;
+//	private int bavail;
 
 	private ImageIcon walk;
 
@@ -43,6 +42,9 @@ public class RoomImages {
 	private boolean pass;
 	protected boolean up;
 
+	/*******************************************************************
+	 * constructor method for the room images
+	 ********************************************************************/
 	RoomImages(){
 		//determine what is a direction
 		left = new ArrayList <Integer>(MAX);// {50,5,0,0,0,0,0};
@@ -62,8 +64,8 @@ public class RoomImages {
 
 	/*******************************************************************
 	 * This method will get noticed when the mini-game wall is chosen
-	 * @param game
-	 * @return
+	 * @param game what game you are playing
+	 * @return an image of that game
 	 ******************************************************************/
 	public ImageIcon gameImage(String game) {
 		if(game.equals("Hangman"))
@@ -79,8 +81,8 @@ public class RoomImages {
 	
 	/*******************************************************************
 	 * This method will get noticed when the user is moving
-	 * @param walk
-	 * @return
+	 * @param walk the direction that you are going to 
+	 * @return string of the walking direction 
 	 ******************************************************************/
 	public String setwalkImage(int walk) {
 		System.out.println(walk);
@@ -186,10 +188,11 @@ public class RoomImages {
 		return walk;
 	}
 
-	/**
+	/*********************************************************************
 	 * This will show the room with the lights off
-	 * @return
-	 */
+	 * @param num that image is
+	 * @return image icon of the room 
+	 ********************************************************************/
 	public ImageIcon darkRoom(int num) {
 		File pic = new File("src/DuelingGame.jpg");
 		
@@ -215,21 +218,25 @@ public class RoomImages {
 	}
 	
 	
+	/*******************************************************************
+	 * gives the name of the image you need
+	 * @param name of the image
+	 * @return an image that you walked to 
+	 ********************************************************************/
 	public ImageIcon giveName(String name) {
 		File pic = new File("src/"+name+".jpg");
 		try {
 			walk = new ImageIcon(ImageIO.read(pic));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			walk = null;
 		}
 		return this.walk;
 	}
 	
-	/**
+	/*********************************************************************
 	 * keep up with all the conditions for the pictures
-	 * @param ch
-	 */
+	 * @param walk attached to walking
+	 ********************************************************************/
 	public void condition(int walk) {
 //			if(w)) {
 //				favail ++;
@@ -245,7 +252,7 @@ public class RoomImages {
 	}
 	/*******************************************************************
 	 * Getter method for first game
-	 * @return game1
+	 * @return game1 image of the game you hit
 	 ******************************************************************/
 	public ImageIcon getGame1() {
 File pic = new File("src/064.jpg");
@@ -270,7 +277,7 @@ File pic = new File("src/064.jpg");
 
 	/*******************************************************************
 	 * Getter method for hangman game
-	 * @return
+	 * @return image of the game 2
 	 ******************************************************************/
 	public ImageIcon getGame2() {
 		File pic = new File("src/Hangman.jpg")	;
@@ -294,7 +301,7 @@ File pic = new File("src/064.jpg");
 
 	/*******************************************************************
 	 * Getter method for dueling game
-	 * @return
+	 * @return image of game 3
 	 ******************************************************************/
 	public ImageIcon getGame3() {
 		
@@ -321,7 +328,7 @@ File pic = new File("src/DuelingGame.jpg");
 
 	/*******************************************************************
 	 * Getter method for fourth game
-	 * @return
+	 * @return image of game 4
 	 ******************************************************************/
 	public ImageIcon getGame4() {
 		File pic = new File("src/077.jpg");

@@ -2,18 +2,15 @@ package escaperoom;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
+//import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,7 +19,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+
+
+
+
 
 
 
@@ -36,7 +36,7 @@ import javax.swing.SwingUtilities;
  *
  **********************************************************************/
 public class EscapeRoomGameGUI extends JFrame implements ActionListener,
-KeyListener, Runnable{
+KeyListener{
 	
 	
 	/**	Used for files **/
@@ -93,9 +93,9 @@ KeyListener, Runnable{
 	/** screen for first mini-game **/
 	private JButton imageButton3;
 
-	private int x=1;
+//	private int x=1;
 
-	private int y=1;
+//	private int y=1;
 
 	private int xDirection;
 
@@ -103,9 +103,9 @@ KeyListener, Runnable{
 
 	private String game;
 
-	private Image dbImage;
-
-	private Graphics dbg;
+//	private Image dbImage;
+//
+//	private Graphics dbg;
 
 	private JLabel label;
 
@@ -115,9 +115,9 @@ KeyListener, Runnable{
 
 	private String move;
 
-	private int direction;
-	
-	private String photo;
+//	private int direction;
+//	
+//	private String photo;
 	
 	/*******************************************************************
 	 * This constructor sets up the GUI for the escape room
@@ -151,7 +151,7 @@ KeyListener, Runnable{
 		
 		label = new JLabel(image.giveName("outsidedoor"));
 		
-		photo = "roomnum";
+//		photo = "roomnum";
 		
 		//empty buttons
 		imageButton1 = new JButton();
@@ -208,23 +208,23 @@ KeyListener, Runnable{
 		
 	}
 	
-	@Override
-	public void run(){
-        try{
-            while(true){
-                move();
-                Thread.sleep(10);
-            }
-        }catch(Exception e){
-            System.out.println("Uh-oh, something went wrong!.");
-        }
-    }
-
-    private void move() {
-        x += xDirection;
-        y += yDirection;
-        
-    }
+//	@Override
+//	public void run(){
+//        try{
+//            while(true){
+//                move();
+//                Thread.sleep(10);
+//            }
+//        }catch(Exception e){
+//            System.out.println("Uh-oh, something went wrong!.");
+//        }
+//    }
+//
+//    private void move() {
+//        x += xDirection;
+//        y += yDirection;
+//        
+//    }
 
      public void setXDirection(int xdir) {
             this.xDirection += xdir;
@@ -382,7 +382,7 @@ imageButton1.addActionListener(this);
 		}
 		
 		if(e.getSource() == imageButton1) {
-			//TODO: include the reaction game
+			//include the reaction game
 				new Reaction();
 			
 		}
@@ -433,8 +433,8 @@ imageButton1.addActionListener(this);
 		
 		//dueling game
 		if(e.getSource() == imageButton3) {
-			//TODO: include the third game 
-			DuelingGUI d = new DuelingGUI();
+			// include the third game 
+			new DuelingGUI();
 			//d.buildGUI();
 			
 		}
@@ -455,8 +455,8 @@ imageButton1.addActionListener(this);
 		}
 		
 		if(e.getSource() == imageButton4) {
-			//TODO: include the master mind game 
-			
+			//include the master mind game 
+			new Mastermind();
 		}
 
 

@@ -1,7 +1,5 @@
 package escaperoom;
 
-import java.io.IOException;
-
 /******************************************************************
  * This program will run a screen of hangman where the user guesses 
  * a word
@@ -13,6 +11,7 @@ public class Hangman {
 	protected char choice;	
 	String s = "";
 	String stringChoice;
+	String holder = "";
 
 	char word[] = new char[10]; // random char
 	char user[] = new char[1]; //point to user input
@@ -27,17 +26,15 @@ public class Hangman {
 	char showWrong[]= new char [10];
 	char replace[] = new char [10];
 	int isWon = 0, isLost = 0, correctGuess = 0, wrongGuesses = 0, added=0;
+	
 	/*****************************************************************
-	 * constructor method to build the game
-	 * @return 
+	 * constructor method to build the game 
 	 *****************************************************************/
 	public void hangmanGame()  // game of hangman, enter letter and receive word
 	{
 		randWord = getword();//point the variable to the randomized word
 		
 		separate = randWord;
-
-
 
 		num = separate.length();
 		//separate= randWord;
@@ -59,6 +56,7 @@ public class Hangman {
 
 		}
 		
+		
 		s = ("\t\t\t   ==============     \n") + 
 				("\t\t\t   ||          ||     \n") + 
 				("\t\t\t   ||          ||     \n") + 
@@ -79,12 +77,12 @@ public class Hangman {
 	/*****************************************************************
 	 * method to determine whether or not you're guess was correct
 	 * sets the string as hangman or as you're progress
-	 * @param string
-	 * @return
+	 * @param string the letter that the user is guessing
+	 * @return a boolean on whether or not your guess is right
 	 *****************************************************************/
 
 	public boolean correctGuess(String string) {
-		String holder = "";
+		
 		boolean b = false;
 		correctGuess = 0;
 		added = 0;
@@ -211,10 +209,12 @@ public class Hangman {
 	/*******************************************************************
 	 * display the hangman of the game, incremental
 	 * 
-	 * @param attempt
+	 * @param attempt takes in the amount of times you've guessed
+	 * @return string of what the hangman looks like
 	 ******************************************************************/
 	public String wrong(int attempt) //Used when guess is wrong to build the hangman
 	{
+		
 		if(attempt>0)
 		{
 
@@ -438,10 +438,21 @@ public class Hangman {
 		return s;
 	}
 
+	/****************************************************************
+	 * setter method to control what rand word is for testing
+	 * @param word that you want rand word to be
+	 *****************************************************************/
+	public void setRandword(String word) {
+		randWord = word;
+	}
+	
+	
+
+	
 	
 	/****************************************************************
 	 * getter method to return the string to the gui 
-	 * @return
+	 * @return what the board looks like
 	 *****************************************************************/
 	public String getBoard() {
 		return s;

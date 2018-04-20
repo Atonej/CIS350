@@ -1,5 +1,4 @@
 package escaperoom;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -7,12 +6,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
+//import javax.sound.sampled.AudioFormat;
+//import javax.sound.sampled.AudioInputStream;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
-import javax.swing.JFrame;
+//import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -124,7 +123,6 @@ public class DialogHangman extends JDialog implements ActionListener, KeyListene
 		
 		
 		
-		
 		entry.addKeyListener(new KeyListener() {	
 				
 				
@@ -132,7 +130,6 @@ public class DialogHangman extends JDialog implements ActionListener, KeyListene
 				
 				@Override
 				public void keyPressed(KeyEvent arg0) {
-					// TODO Auto-generated method stub
 
 						if(arg0.getKeyCode() == 69) {
 							hangman.correctGuess(entry.getText());
@@ -169,11 +166,11 @@ public class DialogHangman extends JDialog implements ActionListener, KeyListene
 		
 	}
 
-	/***
+	/**********************************************************************
 	 * the method will get current game information then display 
 	 * main menu and options
-	 * @param result
-	 */
+	 * @param result number attached to hangman
+	 ********************************************************************/
 	public void description(int result)  //description leading into 3 choices
 	{
 		//char choice;
@@ -222,11 +219,11 @@ public class DialogHangman extends JDialog implements ActionListener, KeyListene
 		
 	}
 
-	/**
+	/*********************************************************************
 	 * This method will catch the last game occured
-	 * @param result
-	 * @return
-	 */
+	 * @param result attached to the last game 
+	 * @return string if you won or not 
+	 ********************************************************************/
 	public String lastgame(int result) //return the results of last game
 	{
 		if(result==1)
@@ -306,11 +303,10 @@ public class DialogHangman extends JDialog implements ActionListener, KeyListene
 
 
 
-	/***
+	/**********************************************************************
 	 * main method to run this dialog alone
-	 * @param args
-	 */
-	public static void main(String[] args){
+	 ********************************************************************/
+	public static void main(){
 		JDialog d = new DialogHangman();
 		d.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		d.setResizable(true);
@@ -318,9 +314,12 @@ public class DialogHangman extends JDialog implements ActionListener, KeyListene
 
 
 
+	/*******************************************************************
+	 * method to react to key being pressed
+	 * @param e being the key event 
+	 *******************************************************************/
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 		if(arg0.getKeyCode() == 80) {
 			hangman.hangmanGame();
@@ -348,83 +347,30 @@ public class DialogHangman extends JDialog implements ActionListener, KeyListene
 		}
 		
 	}
-
+	
+	
+	/*******************************************************************
+	 * method to react to key being typed must implement/no code needed
+	 * @param e being the key event 
+	 *******************************************************************/
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		// not used
 		
 	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 	/*******************************************************************
 	 * method to react to key being typed must implement/no code needed
+	 * @param e being the key event
 	 *******************************************************************/
-	
-	
-	
-//	@Override
-//	public void keyPressed(KeyEvent arg0) {
-//		// TODO Auto-generated method stub
-//
-//
-//		if(arg0.getKeyCode() == 80) {
-//			hangman.hangmanGame();
-//			description.setText(hangman.getBoard());
-//		}
-//		if(arg0.getKeyCode() == 72) {
-//			help_menu_main();
-//		}
-//		if(arg0.getKeyCode() == 81) {
-//			description.setText("\nPlease come again!!\n\n\n");
-//			//close dialog
-//			dispose();
-//		}
-//		if(arg0.isMetaDown()) {
-//			if(arg0.getKeyCode() == 90) {
-//				hangman.hangmanGame();
-//				description.setText("Welcome to the game of Hangman!"
-//						+"\n_______________________________\n"
-//						+"\nFrom the People who put you in \nthis room\n"
-//						+"***********************"+
-//						"------------------------\n\n" +"Main Menu Options are"
-//						+ " below "+""
-//						+ "\n\n------------------------\n");
-//			}
-//			if(arg0.getKeyCode() == 69) {
-//				hangman.correctGuess(entry.getText());
-//				description.setText(hangman.getBoard());
-//				//				if(hangman.correctGuess(entry.getText()) == false)
-//				//					description.setText(hangman.getBoard());
-//				//				else
-//				//					descriptionGuess.setText(hangman.getBoard());
-//				//			}
-//
-//			}
-//
-//		}
-//
-//
-//	}
-//
-//	/*******************************************************************
-//	 * method to react to key being typed must implement/no code needed
-//	 *******************************************************************/
-//		@Override
-//		public void keyReleased(KeyEvent arg0) {
-//		}
-//	
-//		/*******************************************************************
-//		 * method to react to key being typed must implement/no code needed
-//		 *******************************************************************/
-//		@Override
-//		public void keyTyped(KeyEvent arg0) {		
-//		}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// not used
+		
+	}
+
+
+
+
 
 }

@@ -101,7 +101,7 @@ KeyListener, Runnable{
 
 	private int yDirection;
 
-	private boolean game;
+	private String game;
 
 	private Image dbImage;
 
@@ -110,6 +110,14 @@ KeyListener, Runnable{
 	private JLabel label;
 
 	private boolean dark;
+
+	private JButton imageButton;
+
+	private String move;
+
+	private int direction;
+	
+	private String photo;
 	
 	/*******************************************************************
 	 * This constructor sets up the GUI for the escape room
@@ -125,6 +133,8 @@ KeyListener, Runnable{
 //	    (() panel1).drawImage(background, 0, 0, null);
 		
 //		BufferedImage img2 = ImageIO.read(new File("IMG_0061.jpg"));
+	
+		game = "";
 		
 		//assignments to buttons
 		right = new JButton("right");
@@ -139,11 +149,15 @@ KeyListener, Runnable{
 		image = new RoomImages();
 		graphic = new MyGraphics();
 		
+		label = new JLabel(image.giveName("outsidedoor"));
+		
+		photo = "roomnum";
+		
 		//empty buttons
-//		imageButton1 = new JButton();
-//		imageButton2 = new JButton();
-//		imageButton3 = new JButton();
-//		imageButton4 = new JButton();
+		imageButton1 = new JButton();
+		imageButton2 = new JButton();
+		imageButton3 = new JButton();
+		imageButton4 = new JButton();
 		
 		//make sure there are action listeners for buttons
 		right.addActionListener(this);
@@ -171,6 +185,8 @@ KeyListener, Runnable{
 		panel.add(backward);
 		panel.add(forward);
 		
+		buttonPanel.add(label);
+		
 		//set specified layout 
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.BLUE);
@@ -186,6 +202,8 @@ KeyListener, Runnable{
 		setFocusable(true);
 		setVisible(true);
 		setSize(800,700);
+		
+		JOptionPane.showMessageDialog(this, "Press up to begin");
 		
 		
 	}
@@ -210,10 +228,18 @@ KeyListener, Runnable{
 
      public void setXDirection(int xdir) {
             this.xDirection += xdir;
+            this.yDirection += xdir;
+
         }
 
         public void setYDirection(int ydir) {
             this.yDirection += ydir;
+            this.xDirection += ydir;
+
+        }
+        
+        public void setDirection(String dir) {
+        	//this.move += dir;
         }
         
         
@@ -235,7 +261,74 @@ KeyListener, Runnable{
 //
 //            repaint();
 //        }
+	/*
+	 * Return buttons depending on game
+	 */
+        public JButton butttons() {
 	
+
+//put decided image to go to button
+if(game.equals("Reaction")) {
+imageButton1.addActionListener(this);
+
+			//remove all previous objects on panel
+	       	buttonPanel.removeAll();
+			buttonPanel.add(imageButton1);
+			
+			revalidate();
+			repaint();
+			
+			return imageButton1;
+
+			
+}
+
+				
+		
+		if(game.equals("Hangman")) {
+			
+
+			imageButton2 = new JButton(image.gameImage("Hangman"));
+			imageButton2.addActionListener(this);
+			
+
+			//remove the button then replace it
+			
+						//panel.remove(4);
+						
+			buttonPanel.removeAll();
+			buttonPanel.add(imageButton2);
+						
+						revalidate();
+						repaint();
+						
+			return imageButton2;
+						
+						
+		}
+
+		
+		if(game.equals("DuelingGame")) {
+			
+			imageButton3 = new JButton(image.gameImage("DuelingGame"));
+			imageButton3.addActionListener(this);
+			imageButton3.setFocusable(false);
+
+			//imageButton1.setPreferredSize(new Dimension(400, 400));
+				       
+			//buttonPanel.removeAll();
+			//buttonPanel.add(imageButton3);
+						
+			//			revalidate();
+			//			repaint();	
+						
+			return imageButton3;
+						
+		}
+		
+		return null;	
+        	
+        }
 	/***********************************************************************
 	 * This main class will start up the GUI inside the program
 	 **********************************************************************/
@@ -289,8 +382,8 @@ imageButton1.addActionListener(this);
 		}
 		
 		if(e.getSource() == imageButton1) {
-			//TODO: include the car game
-
+			//TODO: include the reaction game
+				new Reaction();
 			
 		}
 		
@@ -341,8 +434,8 @@ imageButton1.addActionListener(this);
 		//dueling game
 		if(e.getSource() == imageButton3) {
 			//TODO: include the third game 
-			DuelingGame d = new DuelingGame();
-			d.buildGUI();
+			DuelingGUI d = new DuelingGUI();
+			//d.buildGUI();
 			
 		}
 		
@@ -396,23 +489,27 @@ imageButton1.addActionListener(this);
 		//hint to self check to see if key is still listening
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			
-			if(game) {
-			imageButton1 = new JButton(image.getGame1());
-			imageButton1.addActionListener(this);
-			imageButton1.setFocusable(false);
+			//3,20(21), 28(29)
+			if(yDirection == 49)
+				game = "Hangman";
+			if(!game.isEmpty()) {
+			imageButton = butttons();
+			imageButton = new JButton(image.gameImage(game));
+			//imageButton.addActionListener(this);
+			//imageButton.setFocusable(false);
 
 		       
 			buttonPanel.removeAll();
-			buttonPanel.add(imageButton1);
-			
+			buttonPanel.add(imageButton);
+			game = "";
 			}
 			
 			else if(!dark) {
 				setXDirection(-1);
-				image.setwalkImage(yDirection);
-				if(image.getwalkImage() == null) {
+				move = image.setwalkImage(xDirection);
+				if(move.equals(null)) {
 					JOptionPane.showMessageDialog(this, "Cannot Go Left");
+					setXDirection(+1);
 					return;
 				}
 				label = new JLabel(image.getwalkImage());
@@ -424,21 +521,27 @@ imageButton1.addActionListener(this);
 						revalidate();
 						repaint();			
 		}  if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			
-			if(game) {
-			imageButton2 = new JButton(image.gameImage("Hangman"));
-			imageButton2.addActionListener(this);
-			imageButton2.setFocusable(false);
+			//9, 8, 10,14, 20(22),29(30),48(49),51(52),54(55,62)skip(56,57,58),
+			//move from reaction game 
+			//if(yDirection == 63)
+				
+			if(!game.isEmpty()) {
+				imageButton = butttons();
+				imageButton = new JButton(image.gameImage(game));
+				imageButton.addActionListener(this);
+				imageButton.setFocusable(false);
 
-   
-			buttonPanel.removeAll();
-			buttonPanel.add(imageButton2);
+			       
+				buttonPanel.removeAll();
+				buttonPanel.add(imageButton);
+			game = "";
 			}
 			
 			else if(!dark) {
+				
 				setXDirection(+1);
-				image.setwalkImage(yDirection);
-				if(image.getwalkImage() == null) {
+				//move = image.setwalkImage(yDirection);
+				if(move.equals(null)) {
 					JOptionPane.showMessageDialog(this, "Cannot Go Right");
 					return;
 				}
@@ -454,21 +557,24 @@ imageButton1.addActionListener(this);
 		}  
 		//backwards
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			
-			if(game) {
-			imageButton3 = new JButton(image.gameImage("DuelingGame"));
-			imageButton3.addActionListener(this);
-			imageButton3.setFocusable(false);
+			//20(23), 36(35),35(37)
+			if(!game.isEmpty()) {
+				imageButton = butttons();
+				imageButton = new JButton(image.gameImage(game));
+				imageButton.addActionListener(this);
+				imageButton.setFocusable(false);
 
-   
-			buttonPanel.removeAll();
-			buttonPanel.add(imageButton3);
+			       
+				buttonPanel.removeAll();
+				buttonPanel.add(imageButton);
+				game = "";
 			}
 			else if(!dark) {
 			setYDirection(-1);
-			image.setwalkImage(yDirection);
-			if(image.getwalkImage() == null) {
+			//move = image.setwalkImage(yDirection);
+			if(!move.equals("backward")) {
 				JOptionPane.showMessageDialog(this, "Cannot Go Backward");
+				setYDirection(+1);
 				return;
 			}
 			label = new JLabel(image.getwalkImage());
@@ -482,23 +588,36 @@ imageButton1.addActionListener(this);
 		}  
 		//forward
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			//14(43), 35(36),58,62(63)
 			
-			if(game) {
-			imageButton4 = new JButton(image.getGame4());
-			imageButton4.addActionListener(this);
-			imageButton4.setFocusable(false);
+			//cameron game 20
+			if(yDirection == 20)
+				game = "DuelingGame";
+			if(yDirection == 63)
+				game = "Reaction";
+			
+			if(!game.isEmpty()) {
+				
+				imageButton = butttons();
+				//imageButton = new JButton(image.gameImage(game));
+				//imageButton.addActionListener(this);
+				//imageButton.setFocusable(false);
 
-			
-			buttonPanel.removeAll();
-			buttonPanel.add(imageButton4);
+			       
+				buttonPanel.removeAll();
+				buttonPanel.add(imageButton);
+				revalidate();
+				repaint();
+				game = "";
 			}
 			
 			else if(!dark) {
 			setYDirection(+1);
 			//System.out.println("before: " + yDirection);
-			image.setwalkImage(yDirection);
-			if(image.getwalkImage() == null) {
+			move = image.setwalkImage(yDirection);
+			if(!move.equals("forward")) {
 				JOptionPane.showMessageDialog(this, "Cannot Go Forward");
+			 setYDirection(-1);
 				return;
 			}
 			label = new JLabel(image.getwalkImage());

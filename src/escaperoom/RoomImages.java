@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,22 +26,38 @@ public class RoomImages {
 	private ImageIcon game4;
 
 	private static final int MAX =200 ;
-	private int left[];
-	private ImageIcon right[];
-	private ImageIcon forward[];
-	private ImageIcon backward[];
+	private ArrayList<Integer> left;
+	private ArrayList<Integer> right;
+	private ArrayList<Integer> forward;
+	private ArrayList<Integer> backward;
+	private int lavail;
+	private int ravail;
+	private int favail;
+	private int bavail;
 
 	private ImageIcon walk;
 
 	private File pic;
+	private File dark[];
+
+	private boolean pass;
+	protected boolean up;
 
 	RoomImages(){
 		//determine what is a direction
-		left = new int[MAX];
-		right = new ImageIcon[MAX];
-		forward= new ImageIcon[MAX];
-		backward= new ImageIcon[MAX];
+		left = new ArrayList <Integer>(MAX);// {50,5,0,0,0,0,0};
+		right = new  ArrayList <Integer>(MAX);//{4,30,49,52};
+		forward= new ArrayList <Integer>(MAX); //{1,2,3,43};
+		backward= new ArrayList <Integer>(MAX); //{23,35,37};
 		
+		//left.addAll(Arrays.asList(10));
+
+		right.addAll(Arrays.asList(4,9));
+		for (int i = 1; i <= 200; i++)
+		{
+		   forward.add(i);
+		}
+		//forward.addAll(Arrays.asList(1,2,3,5,6,7,8,43));
 	}
 
 	/*******************************************************************
@@ -51,7 +69,9 @@ public class RoomImages {
 		if(game.equals("Hangman"))
 			return	getGame2();
 		if(game.equals("DuelingGame"))
-			return	getGame1();
+			return	getGame3();
+		if(game.equals("Reaction"))
+			return getGame1();
 			
 		return null;
 		
@@ -62,26 +82,76 @@ public class RoomImages {
 	 * @param walk
 	 * @return
 	 ******************************************************************/
-	public void setwalkImage(int walk) {
-		
+	public String setwalkImage(int walk) {
+		System.out.println(walk);
+		String str= "";
 		pic = null;
-		//int passed to increment through
-		if(walk <10) {
-			   pic = new File("src/00"+ Integer.toString(walk) + ".jpg");
+			condition(walk);
+		for(int i = 0; i < forward.size()-1; i++ ) {
+			if(walk <0) {
+				return str;
 			}
-		else if(walk <100) {
+			if(left.contains(walk)) {
+				pass =true;
+				str = "left";				
+			}
+			else if(right.contains(walk)) {
+				pass =true;
+				str = "right";				
+
+			}
+			else if(forward.contains(walk)) {
+				pass =true;
+				str = "forward";	
+				
+				//backward available
+				//backward.add(walk);
+			}	
+				
+			else if(backward.contains(walk)) {
+				pass =true;
+				str = "backward";				
+
+			}
+		
+			
+			
+			
+//			else {
+//				throw new IllegalArgumentException("Cannot find int");
+//			}
+			
+		//int passed to increment through
+		if(pass) {
+		if(walk<10) {
+			   pic = new File("src/00"+ Integer.toString(walk)+ ".jpg");
+			}
+		else if(walk<100) {
 			   pic = new File("src/0"+ Integer.toString(walk) + ".jpg");
 			}
-		else if(walk <200) {
+		else if(walk<200){
 		   pic = new File("src/"+ Integer.toString(walk) + ".jpg");
 		}
 		
-		
-		else if(!pic.isFile()){
-			//tell game not possible 
-			this.walk  = null;
-			return;
+//		else if(ravail>0) {
+//			   pic = new File("src/"+ right.get(ravail) + ".jpg");
+//	
+//		}
+			
+		pass = false;
+		break;
 		}
+		
+		}
+		
+		
+		
+		
+//		 if(!pic.isFile()){
+//			//tell game not possible 
+//			this.walk  = null;
+//			return null;
+//		}
 		
 		System.out.println(pic.getName());
 
@@ -92,16 +162,23 @@ public class RoomImages {
 		}
 		catch(MalformedURLException mue)
 		{	//error of form to frame
-		    //mue.printStackTrace();
+		    mue.printStackTrace();
 			this.walk  = null;
+			str = null;
 
 		}
 		catch(IOException ioe)
 		{	//can't print
-		    ioe.printStackTrace();
+			this.walk  = null;
+			str = null;
+
+		    //ioe.printStackTrace();
 		}
 		
+		return str; 
+		
 	}
+		
 	
 	public ImageIcon getwalkImage() {
 		//Image w = new Image(walk);
@@ -109,13 +186,22 @@ public class RoomImages {
 		return walk;
 	}
 
-	public ImageIcon darkRoom() {
+	/**
+	 * This will show the room with the lights off
+	 * @return
+	 */
+	public ImageIcon darkRoom(int num) {
 		File pic = new File("src/DuelingGame.jpg");
 		
+		dark = new File[10];
+		for( int i = 1; i< dark.length; i++) {
+		    pic = new File("src/dark"+ Integer.toString(i) +".jpg");
+		    dark[i] = pic;
+		}
 		try
 		{	//use an url for the undo button
-		    game1 = new ImageIcon(ImageIO.read(
-		            pic));
+		    walk = new ImageIcon(ImageIO.read(
+		            dark[num]));
 		}
 		catch(MalformedURLException mue)
 		{	//error of form to frame
@@ -125,7 +211,37 @@ public class RoomImages {
 		{	//can't print
 		    ioe.printStackTrace();
 		}
-		return game1;
+		return this.walk;
+	}
+	
+	
+	public ImageIcon giveName(String name) {
+		File pic = new File("src/"+name+".jpg");
+		try {
+			walk = new ImageIcon(ImageIO.read(pic));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			walk = null;
+		}
+		return this.walk;
+	}
+	
+	/**
+	 * keep up with all the conditions for the pictures
+	 * @param ch
+	 */
+	public void condition(int walk) {
+//			if(w)) {
+//				favail ++;
+//				forward.addAll(Arrays.asList("001","002","003","005","006","007","008","043"));
+//			}
+			if(walk == 19)
+				
+			if(walk ==10)
+				left.add(11);
+			if(walk == 8)
+				left.add(10);
+		
 	}
 	/*******************************************************************
 	 * Getter method for first game

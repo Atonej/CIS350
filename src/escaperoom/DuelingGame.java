@@ -9,13 +9,13 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 // Change the name of this class after it has been completed
-public class DuelingGame implements ActionListener {
+public class DuelingGame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	Random rand = new Random();
-	boolean win, tie;
+	boolean win, lose;
 	//String instructions = "rules rules rules";
 	
 	JFrame frame;
@@ -28,124 +28,81 @@ public class DuelingGame implements ActionListener {
 	JTextField result;
 	JTextArea rules;
 	
-	public void play(){
-		String move = input.getText();
-		String ai;
-		int aiNum = rand.nextInt(3);
-		if (aiNum == 0){
-			ai = "Grass";
-		}
-		else if (aiNum == 1){
-			ai = "Fire";
-		}
-		else if (aiNum == 2){
-			ai = "Water";
-		}
-		else{
-			ai = "Wrong";
-		}
-		if (move == ai){
-			tie = true;
-		}
-		if (move == "Grass"){
-			if (ai == "Fire"){
-				win = false;
+	int lives = 5;
+	int aiLives = 5;
+	int player;
+	int ai;
+	int guess;
+	String buf;
+	
+	public String duel(){
+		ai = rand.nextInt(3);
+		player = this.getGuess();
+		buf = "";
+		
+		if (ai == 0){
+			if (player == 1){
+				aiLives -= 1;
+				buf = "You hit them!";
 			}
-			else if (ai == "Water"){
-				win = true;
+			if (player == 2){
+				lives -= 1;
+				buf = "You've been hit!";
+			}
+			else{
+				buf = "You countered their attack!";
 			}
 		}
-		if (move == "Fire"){
-			if (ai == "Water"){
-				win = false;
+		if (ai == 1){
+			if (player == 2){
+				aiLives -= 1;
+				buf = "You hit them!";
 			}
-			else if (ai == "Grass"){
-				win = true;
+			if (player == 0){
+				lives -= 1;
+				buf = "You've been hit!";
 			}
-		}
-		if (move == "Water"){
-			if (ai == "Grass"){
-				win = false;
-			}
-			else if (ai == "Fire"){
-				win = true;
+			else{
+				buf = "You countered their attack!";
 			}
 		}
-		else{
+		if (ai == 2){
+			if (player == 0){
+				aiLives -= 1;
+				buf = "You hit them!";
+			}
+			if (player == 1){
+				lives -= 1;
+				buf = "You've been hit!";
+			}
+			else{
+				buf = "You countered their attack!";
+			}
+		}
+		
+		if (lives < 1){
+			lose = true;
+		}
+		if (aiLives <1){
 			win = true;
 		}
+		return buf;
+		
+		
 	}
 	
-	public void buildGUI(){
-		// Building all of our components
-		menu = new JMenuBar();
-		file = new JMenu("File");
-		quit = new JMenuItem("quit");
-		
-		quit.addActionListener(this);
-		file.add(quit);
-		menu.add(file);
-		
-		go = new JButton("Attack!");
-		go.addActionListener(this);
-		
-		input = new JTextField("");
-		input.setColumns(20);
-		result = new JTextField("");
-		result.setColumns(20);
-		rules = new JTextArea("rules");
-		
-		frame = new JFrame("Dueling Game");
-		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
-		panel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		
-		c.gridx = 1;
-		c.gridy = 1;
-		panel.add(rules, c);
-		
-		c.gridy = 2;
-		panel.add(input, c);
-		
-		c.gridy = 3;
-		panel.add(go, c);
-		
-		c.gridy = 4;
-		panel.add(result, c);
-		
-		frame.add(panel);
-		
-		frame.setJMenuBar(menu);
-		frame.pack();
-		frame.setVisible(true);
-	}
 	
-	public void actionPerformed(ActionEvent e){
-		Object w = e.getSource();
-		if (w == quit){
-			System.exit(1);
-		}
-		if (w == go){
-			play();
-			updateUI();
-		}
+	public int getGuess(){
+		return this.guess;
 	}
-	
-	public void updateUI(){
-		if (win){
-			result.setText("You did it");
-		}
-		else{
-			result.setText("Honey, you've got a big storm coming");
-		}
-		if (tie){
-			result.setText("Tie");
-		}
+	public void setGuess(int g){
+		this.guess = g;
 	}
+
 	
 	public static void main(String[] args){
 		DuelingGame d = new DuelingGame();
-		d.buildGUI();
+		//d.buildGUI();
 	}
 	
 }

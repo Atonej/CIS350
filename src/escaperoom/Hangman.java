@@ -1,282 +1,258 @@
 package escaperoom;
 
 /******************************************************************
- * This program will run a screen of hangman where the user guesses 
- * a word
+ * This program will run a screen of hangman where the user guesses a word
+ * 
  * @author Atone Joryman
  * @version Winter 2018
  *******************************************************************/
 public class Hangman {
 
-	protected char choice;	
+	protected char choice;
 	String s = "";
 	String stringChoice;
 	String holder = "";
 
 	char word[] = new char[10]; // random char
-	char user[] = new char[1]; //point to user input
-	int num=0;
+	char user[] = new char[1]; // point to user input
+	int num = 0;
 	int i;
 	int j;
 	int attempt;
 	String randWord;
 	String separate;
-	char progress[] = new char[10]; //character arrays, progress 
-	//of game and wrong characters
-	char showWrong[]= new char [10];
-	char replace[] = new char [10];
-	int isWon = 0, isLost = 0, correctGuess = 0, wrongGuesses = 0, added=0;
-	
+	char progress[] = new char[10]; // character arrays, progress
+	// of game and wrong characters
+	char showWrong[] = new char[10];
+	char replace[] = new char[10];
+	int isWon = 0, isLost = 0, correctGuess = 0, wrongGuesses = 0,
+			added = 0;
+
 	/*****************************************************************
-	 * constructor method to build the game 
+	 * constructor method to build the game
 	 *****************************************************************/
-	public void hangmanGame()  // game of hangman, enter letter and receive word
+	public void hangmanGame() // game of hangman, enter letter and receive word
 	{
-		randWord = getword();//point the variable to the randomized word
-		
+		randWord = getword();// point the variable to the randomized word
+
 		separate = randWord;
 
 		num = separate.length();
-		//separate= randWord;
+		// separate= randWord;
 
+		System.out.println(randWord); // make sure I am randomizing words */
 
-		System.out.println(randWord); //make sure I am randomizing words  */
+		System.out
+				.println("\nYour word is " + num + " characters long");
 
-		System.out.println("\nYour word is " + num +" characters long");
-
-		//put empty spaces as wrong letters/
-		for(i=0; i<10; i++)
-		{
+		// put empty spaces as wrong letters/
+		for (i = 0; i < 10; i++) {
 			showWrong[i] = ' ';
 		}
 
-		for(i=0; i<num+1; i++)
-		{
-			replace[i] = '*';//enter asteriks for empty characters
+		for (i = 0; i < num + 1; i++) {
+			replace[i] = '*';// enter asteriks for empty characters
 
 		}
-		
-		
-		s = ("\t\t\t   ==============     \n") + 
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") +
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") + 
-				("\t\t\t   ||          ||     \n") +
-				("\t\t\t   ,,,,,,,,,,,,,,     \n");
+
+		s = ("\t\t\t   ==============     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ||          ||     \n")
+				+ ("\t\t\t   ,,,,,,,,,,,,,,     \n");
 	}
 
 	/*****************************************************************
-	 * method to determine whether or not you're guess was correct
-	 * sets the string as hangman or as you're progress
-	 * @param string the letter that the user is guessing
+	 * method to determine whether or not you're guess was correct sets the string
+	 * as hangman or as you're progress
+	 * 
+	 * @param string
+	 *            the letter that the user is guessing
 	 * @return a boolean on whether or not your guess is right
 	 *****************************************************************/
 
 	public boolean correctGuess(String string) {
-		
+
 		boolean b = false;
 		correctGuess = 0;
 		added = 0;
 		stringChoice = string;
-		choice =  string.charAt(0);
+		choice = string.charAt(0);
 		System.out.println("\nEnter a letter: ");
 
-
-
-		for(i=0; i<num; i++) //Checking if any of the letters in the word match
+		for (i = 0; i < num; i++) // Checking if any of the letters in the word match
 		{
 
-			if(randWord.charAt(i) == choice)
-			{
-				added=1;
-				System.out.println("Correct\n"); //report results
+			if (randWord.charAt(i) == choice) {
+				added = 1;
+				System.out.println("Correct\n"); // report results
 
 				System.out.println("\n");
-				System.out.println("\t\tYou have " +wrongGuesses +
-						"wrong attempts\n");
+				System.out.println("\t\tYou have " + wrongGuesses
+						+ "wrong attempts\n");
 
-				progress[i]= choice;
-			
-			
+				progress[i] = choice;
 
-				if(added ==1){ //flag if enter user character to string
+				if (added == 1) { // flag if enter user character to string
 
-					replace[i]=choice;
-					added=0;
+					replace[i] = choice;
+					added = 0;
 
 				}
 
 				s = ("Your progress: ");
-				for(i=0; i<num; i++)  //place revealed letters
+				for (i = 0; i < num; i++) // place revealed letters
 				{
 					s += (replace[i]);
 
 				}
-				
+
 				holder = s.replaceFirst("Your progress: ", "");
 
-				
-			
-				
-				
-				if(randWord.equals(holder))
-				{
+				if (randWord.equals(holder)) {
 					System.out.println("winner");
-					isWon=2;
+					isWon = 2;
 					s = ("\n\n\nYou have won the game!"
-							+ "\nYour word was "+randWord+"\n\nPress any key "
+							+ "\nYour word was " + randWord
+							+ "\n\nPress any key "
 							+ "to return to main screen");
-			
 
-					//					return isWon;
+					// return isWon;
 				}
 
-				//indicate correct guess by changing flag
+				// indicate correct guess by changing flag
 				correctGuess = 1;
 				b = true;
 			}
 		}
 
-		//determind false guess
-		if(correctGuess !=1)
-		{
+		// determind false guess
+		if (correctGuess != 1) {
 
 			// use flag to indicate the guess was added to wrong guesses /
 
-			if(added !=1)
-			{
-				showWrong[wrongGuesses]= choice;
+			if (added != 1) {
+				showWrong[wrongGuesses] = choice;
 				added = 1;
 			}
 
 			s = ("\nIncorrect Letters So Far: ");
-			//loop through showWrong array/
-			for(i=0; i<10; i++)
-			{
-				s += (showWrong[i]+ " ");
+			// loop through showWrong array/
+			for (i = 0; i < 10; i++) {
+				s += (showWrong[i] + " ");
 			}
-			s += (" \n Wrong guess! Try again\n "
-					+ "You made " +(wrongGuesses+1) + " wrong attempts "
+			s += (" \n Wrong guess! Try again\n " + "You made "
+					+ (wrongGuesses + 1) + " wrong attempts "
 					+ "be careful!!\n\n");
-			wrongGuesses++;//add to the wrong guess
-			s += wrong(wrongGuesses);//put into wrong function
+			wrongGuesses++;// add to the wrong guess
+			s += wrong(wrongGuesses);// put into wrong function
 
-			if(wrongGuesses==10)
-			{
+			if (wrongGuesses == 10) {
 				s = ("\nYou got hangman!\n\n "
 						+ "Press any key to return to main screen\n"
 						+ "");
-				isLost=1;
-	
+				isLost = 1;
+
 			}
 			b = false;
 		}
 		return b;
 	}
 
-
-
 	/*******************************************************************
 	 * getter method receive randomized word
+	 * 
 	 * @return the chosen word
 	 ******************************************************************/
-	public String getword()
-	{
-		String[] arr2 = new String[] { "crocodile", "crocodile", "crocodile", 
-				"crocodile", "horse", "camel", "monkey", "dolphin", 
-				"sealion", "panther" };
-
+	public String getword() {
+		String[] arr2 = new String[] { "crocodile", "crocodile",
+				"crocodile", "crocodile", "horse", "camel", "monkey",
+				"dolphin", "sealion", "panther" };
 
 		String randomName = arr2[(int) (Math.random() * arr2.length)];
 
-
-		//return word in random spot from list
+		// return word in random spot from list
 		return randomName;
 	}
-
-
-
 
 	/*******************************************************************
 	 * display the hangman of the game, incremental
 	 * 
-	 * @param attempt takes in the amount of times you've guessed
+	 * @param attempt
+	 *            takes in the amount of times you've guessed
 	 * @return string of what the hangman looks like
 	 ******************************************************************/
-	public String wrong(int attempt) //Used when guess is wrong to build the hangman
+	public String wrong(int attempt) // Used when guess is wrong to build the hangman
 	{
-		
-		if(attempt>0)
-		{
 
-			s = ("\t\t\t   ==============     \n") + 
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") +
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") + 
-					("\t\t\t   ||          ||     \n") +
-					("\t\t\t   ,,,,,,,,,,,,,,     \n");
-			
-			if(attempt == 1)
-			{
-				s = ("\t\t\t   ==============     \n") + 
-						("\t\t\t   ||     |    ||     \n") + 
-						("\t\t\t   ||          ||     \n") + 
-						("\t\t\t   ||          ||     \n") + 
-						("\t\t\t   ||          ||     \n") + 
-						("\t\t\t   ||          ||     \n") +
-						("\t\t\t   ||          ||     \n") + 
-						("\t\t\t   ||          ||     \n") + 
-						("\t\t\t   ||          ||     \n") + 
-						("\t\t\t   ||          ||     \n") + 
-						("\t\t\t   ||          ||     \n") + 
-						("\t\t\t   ||          ||     \n") + 
-						("\t\t\t   ||          ||     \n") + 
-						("\t\t\t   ||          ||     \n") +
-						("\t\t\t   ,,,,,,,,,,,,,,     \n");
+		if (attempt > 0) {
+
+			s = ("\t\t\t   ==============     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ||          ||     \n")
+					+ ("\t\t\t   ,,,,,,,,,,,,,,     \n");
+
+			if (attempt == 1) {
+				s = ("\t\t\t   ==============     \n")
+						+ ("\t\t\t   ||     |    ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ,,,,,,,,,,,,,,     \n");
 				System.out.println(s);
 
 			}
 
-			if(attempt == 2)
-			{
+			if (attempt == 2) {
 				s = ("\t\t\t   ==============     \n")
-						+("\t\t\t   ||     |    ||     \n")
-						+("\t\t\t   ||     1    ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ||          ||     \n")
-						+("\t\t\t   ,,,,,,,,,,,,,,     \n");
+						+ ("\t\t\t   ||     |    ||     \n")
+						+ ("\t\t\t   ||     1    ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ||          ||     \n")
+						+ ("\t\t\t   ,,,,,,,,,,,,,,     \n");
 
 			}
 
-			if(attempt == 3)
-			{
+			if (attempt == 3) {
 				s = ("\t\t\t   ==============     \n")
 						+ ("\t\t\t   ||     |    ||     \n")
 						+ ("\t\t\t   ||     1    ||     \n")
@@ -293,11 +269,9 @@ public class Hangman {
 						+ ("\t\t\t   ||          ||     \n")
 						+ ("\t\t\t   ,,,,,,,,,,,,,,     \n");
 
-
 			}
 
-			if(attempt == 4)
-			{
+			if (attempt == 4) {
 				s = ("\t\t\t   ==============     \n")
 						+ ("\t\t\t   ||     |    ||     \n")
 						+ ("\t\t\t   ||     1    ||     \n")
@@ -316,8 +290,7 @@ public class Hangman {
 
 			}
 
-			if(attempt == 5)
-			{
+			if (attempt == 5) {
 				s = ("\t\t\t   ==============     \n")
 						+ ("\t\t\t   ||     |    ||     \n")
 						+ ("\t\t\t   ||     1    ||     \n")
@@ -336,8 +309,7 @@ public class Hangman {
 
 			}
 
-			if(attempt == 6)
-			{
+			if (attempt == 6) {
 
 				s = ("\t\t\t   ==============     \n")
 						+ ("\t\t\t   ||     |    ||     \n")
@@ -356,8 +328,7 @@ public class Hangman {
 						+ ("\t\t\t   ,,,,,,,,,,,,,,     \n");
 
 			}
-			if(attempt == 7)
-			{
+			if (attempt == 7) {
 				s = ("\t\t\t   ==============     \n")
 						+ ("\t\t\t   ||     |    ||     \n")
 						+ ("\t\t\t   ||     1    ||     \n")
@@ -375,8 +346,7 @@ public class Hangman {
 						+ ("\t\t\t   ,,,,,,,,,,,,,,     \n");
 
 			}
-			if(attempt == 8)
-			{
+			if (attempt == 8) {
 
 				s = ("\t\t\t   ==============     \n")
 						+ ("\t\t\t   ||     |    ||     \n")
@@ -395,8 +365,7 @@ public class Hangman {
 						+ ("\t\t\t   ,,,,,,,,,,,,,,     \n");
 
 			}
-			if(attempt == 9)
-			{
+			if (attempt == 9) {
 				s = ("\t\t\t   ==============     \n")
 						+ ("\t\t\t   ||     |    ||     \n")
 						+ ("\t\t\t   ||     1    ||     \n")
@@ -413,10 +382,8 @@ public class Hangman {
 						+ ("\t\t\t   ||          ||     \n")
 						+ ("\t\t\t   ,,,,,,,,,,,,,,     \n");
 
-
 			}
-			if(attempt == 10)
-			{
+			if (attempt == 10) {
 				s = ("\t\t\t   ==============     \n")
 						+ ("\t\t\t   ||     |    ||     \n")
 						+ ("\t\t\t   ||     1    ||     \n")
@@ -440,23 +407,21 @@ public class Hangman {
 
 	/****************************************************************
 	 * setter method to control what rand word is for testing
-	 * @param word that you want rand word to be
+	 * 
+	 * @param word
+	 *            that you want rand word to be
 	 *****************************************************************/
 	public void setRandword(String word) {
 		randWord = word;
 	}
-	
-	
 
-	
-	
 	/****************************************************************
-	 * getter method to return the string to the gui 
+	 * getter method to return the string to the gui
+	 * 
 	 * @return what the board looks like
 	 *****************************************************************/
 	public String getBoard() {
 		return s;
 	}
-
 
 }
